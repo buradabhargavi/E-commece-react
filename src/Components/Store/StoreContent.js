@@ -2,21 +2,25 @@ import { Box, Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import React from "react";
 import DisplayItem from "./DisplayItem";
+import Loader from "../../GlobalComponents/Loader";
 
 function StoreContent() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await fetch("https://fakestoreapi.com/products");
-        if (!data.ok) {
+        const response = await fetch("https://fakestoreapi.com/products");
+        if (!response.ok) {
           throw new Error("Could not fetch data");
         }
-        const response = await data.json();
-        setProducts(response);
+        const data = await response.json();
+        setProducts(data);
       } catch (error) {
-        console.error(error.message);
+        console.error("Error fetching data:", error.message);
+      } finally {
+        setIsLoading(false); // Ensure this runs after fetch attempt
       }
     }
 
@@ -25,18 +29,25 @@ function StoreContent() {
 
   return (
     <Box p={2}>
-      <Grid container spacing={2}>
-        {products.map((product) => (
-          <Grid item xs={12} sm={6} md={6} key={product.id}>
-            <DisplayItem product={product} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Grid container spacing={2}>
+            {products.map((product) => (
+              <Grid item xs={12} sm={6} md={4} key={product.id}>
+                {" "}
+                <DisplayItem product={product} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-      <Box mt={2} textAlign="center">
-        <Button variant="contained" color="primary">
-          See Cart
-        </Button>
-      </Box>
+          <Box mt={2} textAlign="center">
+            <Button variant="contained" color="primary">
+              See Cart
+            </Button>
+          </Box>
+        </>
+      )}
     </Box>
   );
 }
