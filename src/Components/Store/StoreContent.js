@@ -20,7 +20,7 @@ function StoreContent() {
       } catch (error) {
         console.error("Error fetching data:", error.message);
       } finally {
-        setIsLoading(false); // Ensure this runs after fetch attempt
+        setIsLoading(false);
       }
     }
 
