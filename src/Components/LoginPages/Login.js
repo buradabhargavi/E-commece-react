@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Button, TextField, Typography, Link } from "@mui/material";
 import { userLogin } from "../../Assets/Images";
 
 function Login() {
@@ -44,6 +43,7 @@ function Login() {
           alignItems: "center",
           background: "F6F6F6",
           boxShadow: 2,
+          borderRadius: "30px",
         }}
       >
         <Typography variant="h4" sx={{ mb: 3 }}>
@@ -78,13 +78,16 @@ function Login() {
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>
-          <Link to="/forgot-password" sx={{}}>
+          <Link to="/forgot-password" underline="none" sx={{ color: "blue" }}>
             Forgot Password?
           </Link>
         </Box>
         <Box sx={{ mt: 1 }}>
           <span>
-            Don't have an account?<Link to="/signup">Sign up now</Link>
+            Don't have an account?
+            <Link to="/signup" underline="none" sx={{ color: "blue" }}>
+              Sign up now
+            </Link>
           </span>
         </Box>
       </Box>
