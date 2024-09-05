@@ -23,7 +23,6 @@ function ForgotPassword() {
         height: "100vh",
         width: "100vw",
         backgroundColor: "#F6F6F6",
-        padding: 3,
       }}
     >
       <Typography variant="h5" sx={{ mb: 2 }}>
