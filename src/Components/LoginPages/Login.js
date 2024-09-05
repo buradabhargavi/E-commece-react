@@ -78,14 +78,14 @@ function Login() {
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>
-          <Link to="/forgot-password" underline="none" sx={{ color: "blue" }}>
+          <Link href="/forgot-password" underline="none" sx={{ color: "blue" }}>
             Forgot Password?
           </Link>
         </Box>
         <Box sx={{ mt: 1 }}>
           <span>
             Don't have an account?
-            <Link to="/signup" underline="none" sx={{ color: "blue" }}>
+            <Link href="/signup" underline="none" sx={{ color: "blue" }}>
               Sign up now
             </Link>
           </span>
