@@ -67,7 +67,9 @@ const NavigationBar = () => {
               </Link>
             </Typography>
 
-            <Button color="inherit">Login</Button>
+            <Button color="inherit" href="/login">
+              Login
+            </Button>
           </Container>
         </Toolbar>
       </AppBar>

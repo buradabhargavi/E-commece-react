@@ -67,7 +67,7 @@ const StoreNavBar = () => {
               </Link>
             </Typography>
             <Button variant="contained">cart</Button>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">Logout</Button>
           </Container>
         </Toolbar>
       </AppBar>
