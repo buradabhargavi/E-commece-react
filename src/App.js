@@ -6,6 +6,7 @@ import ContactUs from "./Pages/Contactus/ContactUs";
 import AboutUs from "./Pages/AboutUs/AboutUs";
 import Login from "./Components/LoginPages/Login";
 import Signup from "./Components/LoginPages/Signup";
+import ForgotPassword from "./Components/LoginPages/ForgotPassword";
 
 const router = createBrowserRouter([
   { path: "/home", element: <Home /> },
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
   { path: "/store", element: <Store /> },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
+  { path: "/forgotPassword", element: <ForgotPassword /> },
 ]);
 function App() {
   return (

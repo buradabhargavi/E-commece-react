@@ -78,7 +78,7 @@ function Login() {
           </Button>
         </form>
         <Box sx={{ mt: 2 }}>
-          <Link href="/forgot-password" underline="none" sx={{ color: "blue" }}>
+          <Link href="/forgotpassword" underline="none" sx={{ color: "blue" }}>
             Forgot Password?
           </Link>
         </Box>
