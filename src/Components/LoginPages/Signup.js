@@ -18,16 +18,36 @@ function Signup() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password, confirmPassword } = formData;
     if (password !== confirmPassword) {
       console.error("Passwords do not match!");
       return;
     }
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
+
+    const data = await fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBcgjBRt7G81Hr-VFu8FHILVbpJgFF7Y30",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const response = await data.json();
+    if (response && response.error && response.error.message) {
+      let errorMessage = "Authentication failed";
+      errorMessage = response.error.message;
+      alert(errorMessage);
+    }
+
+    return response;
   };
 
   return (

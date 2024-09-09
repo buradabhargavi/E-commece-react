@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -8,6 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { LoginContext } from "../Store/LoginContext";
 
 const theme = createTheme({
   palette: {
@@ -21,6 +22,11 @@ const theme = createTheme({
 });
 
 const NavigationBar = () => {
+  const ctx = useContext(LoginContext);
+
+  const handleLogout = () => {
+    ctx.Logout();
+  };
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static">
@@ -67,9 +73,15 @@ const NavigationBar = () => {
               </Link>
             </Typography>
 
-            <Button color="inherit" href="/login">
-              Login
-            </Button>
+            {!ctx.isloggedIn ? (
+              <Button color="inherit" href="/login">
+                Login
+              </Button>
+            ) : (
+              <Button color="inherit" onClick={handleLogout}>
+                Logout
+              </Button>
+            )}
           </Container>
         </Toolbar>
       </AppBar>

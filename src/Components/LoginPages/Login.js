@@ -1,15 +1,45 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Button, TextField, Typography, Link } from "@mui/material";
 import { userLogin } from "../../Assets/Images";
+import { LoginContext } from "../../Store/LoginContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const ctx = useContext(LoginContext);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const enteredEmail = email;
+    const enteredPassword = password;
+    try {
+      const response = fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBcgjBRt7G81Hr-VFu8FHILVbpJgFF7Y30",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: enteredEmail,
+            password: enteredPassword,
+            returnSecureToken: true,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response;
+      if (data.ok) {
+        const authData = await data.json();
+        // console.log(authData);
+        ctx.Login(authData.idToken);
+      } else {
+        let errorMessage = "Authentication failed";
+        throw new Error(errorMessage);
+      }
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (

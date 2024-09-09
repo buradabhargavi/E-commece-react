@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -8,6 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { LoginContext } from "../../Store/LoginContext";
 
 const theme = createTheme({
   palette: {
@@ -21,6 +22,7 @@ const theme = createTheme({
 });
 
 const StoreNavBar = () => {
+  const ctx = useContext(LoginContext);
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static">
@@ -67,7 +69,9 @@ const StoreNavBar = () => {
               </Link>
             </Typography>
             <Button variant="contained">cart</Button>
-            <Button color="inherit">Logout</Button>
+            <Button color="inherit" onClick={() => ctx.Logout()}>
+              Logout
+            </Button>
           </Container>
         </Toolbar>
       </AppBar>

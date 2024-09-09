@@ -7,22 +7,35 @@ import AboutUs from "./Pages/AboutUs/AboutUs";
 import Login from "./Components/LoginPages/Login";
 import Signup from "./Components/LoginPages/Signup";
 import ForgotPassword from "./Components/LoginPages/ForgotPassword";
+import LoginProvider from "./Store/LoginProvider";
+import AuthLogin from "./Pages/AuthRouer/AuthLogin";
+import AuthProtect from "./Pages/AuthRouer/AuthProtect";
 
 const router = createBrowserRouter([
   { path: "/home", element: <Home /> },
   { path: "/", element: <Home /> },
   { path: "/contactus", element: <ContactUs /> },
   { path: "/aboutus", element: <AboutUs /> },
-  { path: "/store", element: <Store /> },
-  { path: "/login", element: <Login /> },
-  { path: "/signup", element: <Signup /> },
+  {
+    element: <AuthLogin />,
+    children: [
+      { path: "/login", element: <Login /> },
+      { path: "/signup", element: <Signup /> },
+    ],
+  },
   { path: "/forgotPassword", element: <ForgotPassword /> },
+  {
+    element: <AuthProtect />,
+    children: [{ path: "/store", element: <Store /> }],
+  },
 ]);
 function App() {
   return (
-    <RouterProvider router={router}>
-      <Routes />
-    </RouterProvider>
+    <LoginProvider>
+      <RouterProvider router={router}>
+        <Routes />
+      </RouterProvider>
+    </LoginProvider>
   );
 }
 
