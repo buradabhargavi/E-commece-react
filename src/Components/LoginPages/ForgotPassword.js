@@ -1,16 +1,52 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(
-      "If an account with that email exists, a password reset link will be sent."
-    );
-    setEmail("");
+    setIsLoading(true);
+    setError("");
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBcgjBRt7G81Hr-VFu8FHILVbpJgFF7Y30",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            requestType: "PASSWORD_RESET",
+            email: email,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to send email. Please try again.");
+      }
+
+      setMessage(
+        "If an account with that email exists, a password reset link will be sent."
+      );
+      setEmail("");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -40,7 +76,7 @@ function ForgotPassword() {
         }}
       >
         <Typography variant="body1" sx={{ mb: 2 }}>
-          Enter your email address below and we'll send link to reset your
+          Enter your email address below and we'll send a link to reset your
           password.
         </Typography>
 
@@ -52,6 +88,7 @@ function ForgotPassword() {
             margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
 
           <Button
@@ -60,14 +97,25 @@ function ForgotPassword() {
             color="primary"
             fullWidth
             sx={{ mt: 2 }}
+            disabled={isLoading}
           >
-            Send Reset Link
+            {isLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Send Reset Link"
+            )}
           </Button>
         </form>
 
         {message && (
           <Typography variant="body2" sx={{ mt: 2, color: "green" }}>
             {message}
+          </Typography>
+        )}
+
+        {error && (
+          <Typography variant="body2" sx={{ mt: 2, color: "red" }}>
+            {error}
           </Typography>
         )}
       </Box>
