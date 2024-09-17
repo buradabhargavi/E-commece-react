@@ -6,11 +6,14 @@ import { Typography } from "@mui/material";
 function CartItems() {
   const { items } = useContext(CartContext);
   console.log("theseare props:", items);
-  const totalPrice = items.reduce((total, item) => total + item.price, 0);
+  const totalPrice = items.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   return (
     <div>
       {items.map((item) => (
-        <CartItem item={item}></CartItem>
+        <CartItem item={item} key={item.id}></CartItem>
       ))}
       <Typography
         variant="h6"

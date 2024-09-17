@@ -50,7 +50,6 @@ function CartProvider(props) {
           console.error("Failed to update cart data:", response.statusText);
         }
       } else {
-        // Create new cart
         const response = await fetch(`${apiUrl}/cart`, {
           method: "POST",
           headers: {
@@ -70,10 +69,18 @@ function CartProvider(props) {
   };
 
   const addItemToCart = async (newItem) => {
-    const updatedItems = [...cartData.items, { ...newItem, quantity: 1 }];
+    const existingItem = cartData.items.find((item) => item.id === newItem.id);
+    if (existingItem) {
+      var updatedItems = cartData.items.map((item) =>
+        item.id === existingItem.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedItems = [...cartData.items, { ...newItem, quantity: 1 }];
+    }
     saveCartData(cartData.emailId, updatedItems);
   };
-
   const cartContext = {
     items: cartData.items,
     AddItem: addItemToCart,
