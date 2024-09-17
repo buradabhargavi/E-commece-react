@@ -1,7 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Grid } from "@mui/material";
+import CartContext from "../../Store/CartContext";
+import { useContext } from "react";
 
 function DisplayItem({ product }) {
+  const ctx = useContext(CartContext);
+  //console.log(ctx.AddItem);
   return (
     <Box
       borderRadius={2}
@@ -30,7 +34,13 @@ function DisplayItem({ product }) {
           <Typography variant="h6">${product.price}</Typography>
         </Grid>
         <Grid item>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              ctx.AddItem(product);
+            }}
+          >
             Add to Cart
           </Button>
         </Grid>

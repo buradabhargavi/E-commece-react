@@ -4,7 +4,8 @@ import { LoginContext } from "./LoginContext";
 function LoginProvider({ children }) {
   const item = localStorage.getItem("Token");
   const [token, setToken] = useState(item);
-  const Login = (token) => {
+  const Login = (token, email) => {
+    localStorage.setItem("email", email);
     localStorage.setItem("Token", token);
     setToken(token);
   };

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { LoginContext } from "../../Store/LoginContext";
+import ModalCart from "../../UI/Modal";
 
 const theme = createTheme({
   palette: {
@@ -23,6 +24,8 @@ const theme = createTheme({
 
 const StoreNavBar = () => {
   const ctx = useContext(LoginContext);
+  const [showCart, setShowCart] = useState(false);
+
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static">
@@ -68,10 +71,23 @@ const StoreNavBar = () => {
                 Contact Us
               </Link>
             </Typography>
-            <Button variant="contained">cart</Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setShowCart((prev) => !prev);
+              }}
+            >
+              cart
+            </Button>
             <Button color="inherit" onClick={() => ctx.Logout()}>
               Logout
             </Button>
+            {showCart && (
+              <ModalCart
+                show={showCart}
+                handleClose={() => setShowCart(false)}
+              ></ModalCart>
+            )}
           </Container>
         </Toolbar>
       </AppBar>

@@ -32,7 +32,7 @@ function Login() {
       if (data.ok) {
         const authData = await data.json();
         // console.log(authData);
-        ctx.Login(authData.idToken);
+        ctx.Login(authData.idToken, authData.email);
       } else {
         let errorMessage = "Authentication failed";
         throw new Error(errorMessage);

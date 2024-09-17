@@ -10,6 +10,7 @@ import ForgotPassword from "./Components/LoginPages/ForgotPassword";
 import LoginProvider from "./Store/LoginProvider";
 import AuthLogin from "./Pages/AuthRouer/AuthLogin";
 import AuthProtect from "./Pages/AuthRouer/AuthProtect";
+import CartProvider from "./Store/cartProvider";
 
 const router = createBrowserRouter([
   { path: "/home", element: <Home /> },
@@ -32,9 +33,11 @@ const router = createBrowserRouter([
 function App() {
   return (
     <LoginProvider>
-      <RouterProvider router={router}>
-        <Routes />
-      </RouterProvider>
+      <CartProvider>
+        <RouterProvider router={router}>
+          <Routes />
+        </RouterProvider>
+      </CartProvider>
     </LoginProvider>
   );
 }
