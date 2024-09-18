@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import CartContext from "../../Store/CartContext";
 
-function CartItem({ item, onIncrease, onDecrease }) {
+function CartItem({ item }) {
+  const ctx = useContext(CartContext);
   return (
     <Box
       sx={{
@@ -34,7 +36,7 @@ function CartItem({ item, onIncrease, onDecrease }) {
             fontWeight: "bold",
             height: "32px",
           }}
-          onClick={() => onDecrease(item.id)}
+          onClick={() => ctx.editCart(item.id, "decrease")}
         >
           -
         </Button>
@@ -50,7 +52,7 @@ function CartItem({ item, onIncrease, onDecrease }) {
             fontWeight: "bold",
             height: "32px",
           }}
-          onClick={() => onIncrease(item.id)}
+          onClick={() => ctx.editCart(item.id, "increase")}
         >
           +
         </Button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CartContext from "./CartContext";
 
-const apiUrl = "https://crudcrud.com/api/5d0ee8c00713460ca63a51a0acdf7d03";
+const apiUrl = "https://crudcrud.com/api/38f291d671f4430ca40fe3ab2286d14e";
 
 function CartProvider(props) {
   const [cartData, setCartData] = useState({ emailId: "", items: [] });
@@ -70,8 +70,10 @@ function CartProvider(props) {
 
   const addItemToCart = async (newItem) => {
     const existingItem = cartData.items.find((item) => item.id === newItem.id);
+    let updatedItems;
+
     if (existingItem) {
-      var updatedItems = cartData.items.map((item) =>
+      updatedItems = cartData.items.map((item) =>
         item.id === existingItem.id
           ? { ...item, quantity: item.quantity + 1 }
           : item
@@ -79,11 +81,32 @@ function CartProvider(props) {
     } else {
       updatedItems = [...cartData.items, { ...newItem, quantity: 1 }];
     }
+
     saveCartData(cartData.emailId, updatedItems);
   };
+
+  const editCart = (id, action) => {
+    setCartData((prevCartData) => {
+      const updatedItems = prevCartData.items
+        .map((item) => {
+          if (item.id === id) {
+            const newQuantity =
+              action === "increase" ? item.quantity + 1 : item.quantity - 1;
+            return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
+          }
+          return item;
+        })
+        .filter(Boolean);
+
+      saveCartData(prevCartData.emailId, updatedItems);
+      return { ...prevCartData, items: updatedItems };
+    });
+  };
+
   const cartContext = {
     items: cartData.items,
     AddItem: addItemToCart,
+    editCart: editCart,
   };
 
   return (
